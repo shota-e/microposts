@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user,:user_confirm, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -43,6 +43,13 @@ class UsersController < ApplicationController
   
   def set_user
     @user = User.find(params[:id])
+  end
+  
+  def user_confirm
+    @user = User.find(params[:id])
+    if @user != current_user
+      render 'static_pages/home'
+    end
   end
   
 end
