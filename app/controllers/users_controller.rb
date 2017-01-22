@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:edit, :update]
+
   def show
     @user = User.find(params[:id])
   end
+
   def new
     @user = User.new
   end
@@ -16,10 +19,30 @@ class UsersController < ApplicationController
     end
   end
   
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    #binding.pry
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      @user.save
+      flash[:success] = "Update profile!"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
   private
   
   def user_params
-    params.require(:user).permit(:name,:email,:password,:password_confirmation)
+    params.require(:user).permit(:name,:email,:password,:password_confirmation,:profile,:area)
+  end
+  
+  def set_user
+    @user = User.find(params[:id])
   end
   
 end
