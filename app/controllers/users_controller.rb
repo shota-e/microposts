@@ -35,6 +35,18 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
+  
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following_users
+    render 'show_follow'
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.follower_users
+    render 'show_follower'
+  end
 
   private
   
@@ -52,5 +64,6 @@ class UsersController < ApplicationController
       render 'static_pages/home'
     end
   end
+  
   
 end
