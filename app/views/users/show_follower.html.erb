@@ -22,7 +22,7 @@
     <% if @users.any? %>
         <h3>follower(<%= current_user.follower_relationships.count %>)</h3>
           <ol class="follow">
-            <%= render partial: 'users/followed' %>
+            <%= render @users %>
           </ol>
     <% else %>
         <p class="caution">No user is following you</p>
