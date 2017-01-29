@@ -14,9 +14,12 @@
     Posted 
 <%= time_ago_in_words(micropost.created_at) %>
  ago.
+<%= render 'microposts/favorite_form', micropost: micropost %>
 <% if current_user == micropost.user %>
+
 <%= link_to "delete", micropost, method: :delete,
                                        data: { confirm: "You sure?" } %>
+
 <% end %>
   </span>
 </li>

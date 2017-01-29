@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_action :set_user,:user_confirm, only: [:edit, :update]
 
   def show
+    @title = 'Micropost'
     @user = User.find(params[:id])
+    @count = @user.microposts.count
     @microposts = @user.microposts.order(created_at: :desc)
   end
 
@@ -47,6 +49,16 @@ class UsersController < ApplicationController
     @users = @user.follower_users
     render 'show_follower'
   end
+  
+  def favorite
+    @title = 'Favorites'
+    @user = User.find(params[:id])
+    @count = @user.favorite_microposts.count
+    @microposts = @user.favorite_microposts
+    render 'show'
+  end
+  
+  
 
   private
   
