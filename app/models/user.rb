@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     validates :area, presence: true,allow_blank: true
     has_secure_password
     has_many :microposts
-    
+
     has_many :following_relationships, class_name:  "Relationship",
                                        foreign_key: "follower_id",
                                        dependent:   :destroy
@@ -22,25 +22,29 @@ class User < ActiveRecord::Base
     
     has_many :favorites, foreign_key: 'user_id', dependent: :destroy
     has_many :favorite_microposts, through: :favorites, source: :micropost
-    
+
     def favorite(micropost)
         favorites.find_or_create_by(micropost_id: micropost.id)
     end
-    
+
     def unfavorite(micropost)
         favorite = favorites.find_by(micropost_id: micropost.id)
         favorite.destroy if favorite
     end
 
+    def favorite?(micropost)
+      favorite_microposts.include?(micropost)
+    end
+
     def follow(other_user)
         following_relationships.find_or_create_by(followed_id: other_user.id)
     end
-    
+
     def unfollow(other_user)
         following_relationship = following_relationships.find_by(followed_id: other_user.id)
         following_relationship.destroy if following_relationship
     end
-    
+
     def following?(other_user)
         following_users.include?(other_user)
     end

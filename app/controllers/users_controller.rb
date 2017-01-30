@@ -50,12 +50,12 @@ class UsersController < ApplicationController
     render 'show_follower'
   end
   
-  def favorite
+  def favorites
     @title = 'Favorites'
     @user = User.find(params[:id])
     @count = @user.favorite_microposts.count
     @microposts = @user.favorite_microposts
-    render 'show'
+    render 'show_favorites'
   end
   
   
